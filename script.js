@@ -4,7 +4,7 @@ const totalImages = 10; // Change based on number of photos
 
 for (let i = 1; i <= totalImages; i++) {
   const img = document.createElement('img');
-  img.src = `photos/img${i}.jpg`;
+  img.src = `${i}.jpg`; 
   gallery.appendChild(img);
 }
 
