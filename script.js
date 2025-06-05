@@ -1,22 +1,38 @@
-// Insert all images automatically from the photos folder
-const gallery = document.querySelector('.gallery');
-const totalImages = 6; // Change based on number of photos
+const totalImages = 6;  // Number of your images
 
-for (let i = 1; i <= totalImages; i++) {
-  const img = document.createElement('img');
-  img.src = `${i}.jpg`; 
-  gallery.appendChild(img);
-}
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const windowHeight = window.innerHeight;
 
-// Scroll-triggered reveal
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
+  for (let i = 1; i <= totalImages; i++) {
+    const img = document.getElementById(`img${i}`);
+    if (!img) continue;
+
+    const imgPosition = (i - 1) * windowHeight * 0.8; // adjust trigger position
+
+    if (scrollTop + windowHeight > imgPosition) {
+      img.style.opacity = 1;
+      img.style.transform = 'translateY(0)';
+    } else {
+      img.style.opacity = 0;
+      img.style.transform = 'translateY(50px)';
     }
-  });
+  }
 });
 
-document.querySelectorAll('.gallery img').forEach(img => {
-  observer.observe(img);
-});
+// Dynamically create image elements
+window.onload = () => {
+  const container = document.getElementById('container');
+  for (let i = 1; i <= totalImages; i++) {
+    const img = document.createElement('img');
+    img.id = `img${i}`;
+    img.src = `${i}.jpg`;   // load images from root folder
+    img.style.opacity = 0;
+    img.style.transform = 'translateY(50px)';
+    img.style.transition = 'all 0.8s ease-out';
+    img.style.width = '80vw';
+    img.style.display = 'block';
+    img.style.margin = '50px auto';
+    container.appendChild(img);
+  }
+};
