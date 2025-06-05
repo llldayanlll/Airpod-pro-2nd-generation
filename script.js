@@ -1,19 +1,20 @@
 window.addEventListener("load", () => {
   gsap.registerPlugin(ScrollTrigger);
 
-  const images = document.querySelectorAll(".slide-img");
+  const panels = document.querySelectorAll(".panel");
 
-  images.forEach((img, i) => {
+  panels.forEach((panel, i) => {
+    const img = panel.querySelector("img");
+
     gsap.to(img, {
       opacity: 1,
       scale: 1,
+      ease: "power2.out",
       scrollTrigger: {
-        trigger: img,
-        start: "top top",
-        end: "+=100%",
+        trigger: panel,
+        start: "top center",
+        end: "bottom center",
         scrub: true,
-        pin: true,
-        pinSpacing: false,
       }
     });
   });
