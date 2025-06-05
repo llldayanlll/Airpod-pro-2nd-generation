@@ -3,7 +3,7 @@ window.addEventListener("load", () => {
 
   const panels = document.querySelectorAll(".panel");
 
-  panels.forEach((panel, i) => {
+  panels.forEach((panel, index) => {
     const img = panel.querySelector("img");
 
     gsap.to(img, {
@@ -12,10 +12,19 @@ window.addEventListener("load", () => {
       ease: "power2.out",
       scrollTrigger: {
         trigger: panel,
-        start: "top center",
-        end: "bottom center",
+        start: () => `top+=${index * window.innerHeight} top`,
+        end: () => `top+=${(index + 1) * window.innerHeight} top`,
         scrub: true,
+        onLeave: () => {
+          gsap.to(img, {
+            opacity: 0,
+            scale: 0.8,
+            duration: 1,
+            ease: "power2.inOut"
+          });
+        }
       }
     });
   });
 });
+
